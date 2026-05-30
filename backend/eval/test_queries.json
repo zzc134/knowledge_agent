@@ -1,0 +1,352 @@
+[
+  {
+    "id": "exact_001",
+    "intent": "exact_lookup",
+    "query": "我之前收藏的那篇 Anthropic Building Effective Agents 文章",
+    "relevant_chunk_id": "placeholder_001",
+    "description": "精确查找：按标题找特定文章"
+  },
+  {
+    "id": "exact_002",
+    "intent": "exact_lookup",
+    "query": "帮我找出 Prompt Cache 入门那篇文档",
+    "relevant_chunk_id": "placeholder_002",
+    "description": "精确查找：按主题找文档"
+  },
+  {
+    "id": "exact_003",
+    "intent": "exact_lookup",
+    "query": "找到混合检索设计那篇文章",
+    "relevant_chunk_id": "placeholder_003",
+    "description": "精确查找：按技术关键词找"
+  },
+  {
+    "id": "exact_004",
+    "intent": "exact_lookup",
+    "query": "我存的 Python 性能优化文档在哪里",
+    "relevant_chunk_id": "placeholder_004",
+    "description": "精确查找：按语言+主题找"
+  },
+  {
+    "id": "exact_005",
+    "intent": "exact_lookup",
+    "query": "那个关于 RRF 融合算法的文档",
+    "relevant_chunk_id": "placeholder_005",
+    "description": "精确查找：按算法名找"
+  },
+  {
+    "id": "exact_006",
+    "intent": "exact_lookup",
+    "query": "Agent Memory 设计指南那篇文档",
+    "relevant_chunk_id": "placeholder_006",
+    "description": "精确查找：按文档标题找"
+  },
+  {
+    "id": "exact_007",
+    "intent": "exact_lookup",
+    "query": "async/await 最佳实践那篇文章",
+    "relevant_chunk_id": "placeholder_007",
+    "description": "精确查找：按技术术语找"
+  },
+  {
+    "id": "exact_008",
+    "intent": "exact_lookup",
+    "query": "bge-m3 embedding 模型那篇说明",
+    "relevant_chunk_id": "placeholder_008",
+    "description": "精确查找：按模型名找"
+  },
+  {
+    "id": "exact_009",
+    "intent": "exact_lookup",
+    "query": "pgvector 和 ChromaDB 对比的文章",
+    "relevant_chunk_id": "placeholder_009",
+    "description": "精确查找：按对比主题找"
+  },
+  {
+    "id": "exact_010",
+    "intent": "exact_lookup",
+    "query": "帮我找到 Prompt Caching 的介绍文档",
+    "relevant_chunk_id": "placeholder_010",
+    "description": "精确查找：按功能特性找"
+  },
+  {
+    "id": "semantic_001",
+    "intent": "semantic_search",
+    "query": "关于 agent memory 设计有什么文章",
+    "relevant_chunk_id": "placeholder_006",
+    "description": "语义查找：agent memory 相关"
+  },
+  {
+    "id": "semantic_002",
+    "intent": "semantic_search",
+    "query": "怎么让 AI 记住用户的长期偏好",
+    "relevant_chunk_id": "placeholder_011",
+    "description": "语义查找：长期记忆机制"
+  },
+  {
+    "id": "semantic_003",
+    "intent": "semantic_search",
+    "query": "有哪些方法可以把向量搜索和关键词搜索结合起来",
+    "relevant_chunk_id": "placeholder_003",
+    "description": "语义查找：混合检索方案"
+  },
+  {
+    "id": "semantic_004",
+    "intent": "semantic_search",
+    "query": "怎样提高 LLM API 调用的效率降低成本",
+    "relevant_chunk_id": "placeholder_002",
+    "description": "语义查找：prompt cache 效率"
+  },
+  {
+    "id": "semantic_005",
+    "intent": "semantic_search",
+    "query": "Python 异步编程怎么优化数据库连接",
+    "relevant_chunk_id": "placeholder_004",
+    "description": "语义查找：异步编程优化"
+  },
+  {
+    "id": "semantic_006",
+    "intent": "semantic_search",
+    "query": "多 Agent 系统之间怎么通信",
+    "relevant_chunk_id": "placeholder_012",
+    "description": "语义查找：Agent 通信机制"
+  },
+  {
+    "id": "semantic_007",
+    "intent": "semantic_search",
+    "query": "如何评估 RAG 系统的检索质量",
+    "relevant_chunk_id": "placeholder_013",
+    "description": "语义查找：RAG 评估方法"
+  },
+  {
+    "id": "semantic_008",
+    "intent": "semantic_search",
+    "query": "知识图谱和向量数据库有什么区别",
+    "relevant_chunk_id": "placeholder_014",
+    "description": "语义查找：存储方案对比"
+  },
+  {
+    "id": "semantic_009",
+    "intent": "semantic_search",
+    "query": "怎么给文章自动分块才能保证检索效果好",
+    "relevant_chunk_id": "placeholder_015",
+    "description": "语义查找：分块策略"
+  },
+  {
+    "id": "semantic_010",
+    "intent": "semantic_search",
+    "query": "有哪些好用的中文 embedding 模型",
+    "relevant_chunk_id": "placeholder_008",
+    "description": "语义查找：embedding 模型选择"
+  },
+  {
+    "id": "cross_001",
+    "intent": "cross_document",
+    "query": "那篇讲 prompt caching 的文章和 agent memory 有什么联系",
+    "relevant_chunk_id": "placeholder_016",
+    "description": "跨文档关联：cache 和 memory 的关联"
+  },
+  {
+    "id": "cross_002",
+    "intent": "cross_document",
+    "query": "RRF 融合和 LLM 重排怎么一起用",
+    "relevant_chunk_id": "placeholder_017",
+    "description": "跨文档关联：RRF 和重排的组合"
+  },
+  {
+    "id": "cross_003",
+    "intent": "cross_document",
+    "query": "短期记忆和长期记忆的衰减策略有什么不同",
+    "relevant_chunk_id": "placeholder_018",
+    "description": "跨文档关联：两种记忆的对比"
+  },
+  {
+    "id": "cross_004",
+    "intent": "cross_document",
+    "query": "bge-m3 的双向量输出怎么应用到混合检索中",
+    "relevant_chunk_id": "placeholder_019",
+    "description": "跨文档关联：embedding 和检索的结合"
+  },
+  {
+    "id": "cross_005",
+    "intent": "cross_document",
+    "query": "pgvector 的 HNSW 索引和全文检索 tsvector 能同时用吗",
+    "relevant_chunk_id": "placeholder_020",
+    "description": "跨文档关联：数据库特性的组合"
+  },
+  {
+    "id": "cross_006",
+    "intent": "cross_document",
+    "query": "多 Agent 协商中怎么用到混合检索的结果",
+    "relevant_chunk_id": "placeholder_021",
+    "description": "跨文档关联：Agent 和检索的衔接"
+  },
+  {
+    "id": "cross_007",
+    "intent": "cross_document",
+    "query": "语义分块和 embedding 质量有什么关系",
+    "relevant_chunk_id": "placeholder_022",
+    "description": "跨文档关联：分块和 embedding"
+  },
+  {
+    "id": "cross_008",
+    "intent": "cross_document",
+    "query": "艾宾浩斯遗忘曲线在知识管理系统中怎么应用",
+    "relevant_chunk_id": "placeholder_023",
+    "description": "跨文档关联：遗忘曲线和记忆系统"
+  },
+  {
+    "id": "cross_009",
+    "intent": "cross_document",
+    "query": "FastAPI 的 SSE 端点怎么配合 Agent 通信使用",
+    "relevant_chunk_id": "placeholder_024",
+    "description": "跨文档关联：SSE 和 Agent 通信"
+  },
+  {
+    "id": "cross_010",
+    "intent": "cross_document",
+    "query": "DeepSeek 模型和 bge-m3 embedding 在中英文混合场景下怎么搭配",
+    "relevant_chunk_id": "placeholder_025",
+    "description": "跨文档关联：LLM 和 embedding 的配合"
+  },
+  {
+    "id": "time_001",
+    "intent": "time_range",
+    "query": "上周我看过哪些关于 RAG 的内容",
+    "relevant_chunk_id": "placeholder_026",
+    "description": "时间范围：按周查询 RAG 内容"
+  },
+  {
+    "id": "time_002",
+    "intent": "time_range",
+    "query": "最近三天收藏的文章里有没有讲 agent 的",
+    "relevant_chunk_id": "placeholder_027",
+    "description": "时间范围：近三天 agent 文章"
+  },
+  {
+    "id": "time_003",
+    "intent": "time_range",
+    "query": "这个月我总共看了多少篇关于机器学习的文档",
+    "relevant_chunk_id": "placeholder_028",
+    "description": "时间范围：月度统计"
+  },
+  {
+    "id": "time_004",
+    "intent": "time_range",
+    "query": "2026年5月我收藏的所有文章",
+    "relevant_chunk_id": "placeholder_029",
+    "description": "时间范围：特定月份"
+  },
+  {
+    "id": "time_005",
+    "intent": "time_range",
+    "query": "最近一周新增了哪些关于 LLM 的文档",
+    "relevant_chunk_id": "placeholder_030",
+    "description": "时间范围：近一周 LLM 新文档"
+  },
+  {
+    "id": "time_006",
+    "intent": "time_range",
+    "query": "今天早上浏览了哪些内容",
+    "relevant_chunk_id": "placeholder_031",
+    "description": "时间范围：当日内容"
+  },
+  {
+    "id": "time_007",
+    "intent": "time_range",
+    "query": "上个月我对哪些主题最感兴趣",
+    "relevant_chunk_id": "placeholder_032",
+    "description": "时间范围：上月兴趣回顾"
+  },
+  {
+    "id": "time_008",
+    "intent": "time_range",
+    "query": "最近两周有没有新的关于向量数据库的文章入库",
+    "relevant_chunk_id": "placeholder_033",
+    "description": "时间范围：两周内向量数据库"
+  },
+  {
+    "id": "time_009",
+    "intent": "time_range",
+    "query": "今年看过哪些关于 Prompt Engineering 的文档",
+    "relevant_chunk_id": "placeholder_034",
+    "description": "时间范围：年度 Prompt 文档"
+  },
+  {
+    "id": "time_010",
+    "intent": "time_range",
+    "query": "昨天我收藏的那篇关于知识图谱的文章",
+    "relevant_chunk_id": "placeholder_035",
+    "description": "时间范围：昨日收藏"
+  },
+  {
+    "id": "negative_001",
+    "intent": "negative_query",
+    "query": "关于 React 框架的文章",
+    "relevant_chunk_id": "none",
+    "description": "否定查询：知识库无 React 内容"
+  },
+  {
+    "id": "negative_002",
+    "intent": "negative_query",
+    "query": "比特币价格走势分析",
+    "relevant_chunk_id": "none",
+    "description": "否定查询：无关金融话题"
+  },
+  {
+    "id": "negative_003",
+    "intent": "negative_query",
+    "query": "红烧肉的做法",
+    "relevant_chunk_id": "none",
+    "description": "否定查询：完全无关烹饪话题"
+  },
+  {
+    "id": "negative_004",
+    "intent": "negative_query",
+    "query": "如何给汽车换机油",
+    "relevant_chunk_id": "none",
+    "description": "否定查询：完全无关汽车话题"
+  },
+  {
+    "id": "negative_005",
+    "intent": "negative_query",
+    "query": "2026年NBA总决赛结果",
+    "relevant_chunk_id": "none",
+    "description": "否定查询：体育新闻"
+  },
+  {
+    "id": "negative_006",
+    "intent": "negative_query",
+    "query": "Vue.js 和 Angular 的对比",
+    "relevant_chunk_id": "none",
+    "description": "否定查询：其他前端框架"
+  },
+  {
+    "id": "negative_007",
+    "intent": "negative_query",
+    "query": "日本旅游攻略",
+    "relevant_chunk_id": "none",
+    "description": "否定查询：旅游话题"
+  },
+  {
+    "id": "negative_008",
+    "intent": "negative_query",
+    "query": "股票投资入门指南",
+    "relevant_chunk_id": "none",
+    "description": "否定查询：投资理财"
+  },
+  {
+    "id": "negative_009",
+    "intent": "negative_query",
+    "query": "Django REST framework 教程",
+    "relevant_chunk_id": "none",
+    "description": "否定查询：其他 Python 框架"
+  },
+  {
+    "id": "negative_010",
+    "intent": "negative_query",
+    "query": "如何学习弹吉他",
+    "relevant_chunk_id": "none",
+    "description": "否定查询：音乐学习"
+  }
+]

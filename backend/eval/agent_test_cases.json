@@ -1,0 +1,27 @@
+[
+  {
+    "query": "什么是混合检索？",
+    "expected_citations": 1,
+    "expected_tools": ["search"]
+  },
+  {
+    "query": "如何设计 Agent 的记忆系统？",
+    "expected_citations": 2,
+    "expected_tools": ["search"]
+  },
+  {
+    "query": "RRF 融合和 LLM 重排有什么区别？",
+    "expected_citations": 1,
+    "expected_tools": ["search"]
+  },
+  {
+    "query": "https://arxiv.org/abs/2301.12345",
+    "expected_citations": 0,
+    "expected_tools": ["fetch_url", "check_similar"]
+  },
+  {
+    "query": "bge-m3 和 OpenAI embedding 哪个更适合中文？",
+    "expected_citations": 1,
+    "expected_tools": ["search"]
+  }
+]
