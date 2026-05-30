@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: knowledge
+      POSTGRES_PASSWORD: knowledge123
+      POSTGRES_DB: knowledge_agent
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  pgdata:
