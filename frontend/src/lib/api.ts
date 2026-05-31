@@ -2,7 +2,7 @@ const BASE_URL = "http://localhost:8000";
 
 
 
-定义类型
+
 export interface ChatResponse {
   agent: string;
   response: string;
