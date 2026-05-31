@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from db.database import init_db
 from core.orchestrator import Orchestrator
+from memory.long_term import get_active_interests
 
 orchestrator = Orchestrator()
 
@@ -18,6 +19,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Knowledge Agent", version="0.1.0", lifespan=lifespan)
 
+
+#CORS —— 允许跨域
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
@@ -69,6 +72,13 @@ async def negotiate(request: Request):
         "final_answer": result["final_answer"],
         "message_history": result["message_history"],
     }
+
+
+@app.get("/memory/interests")
+async def memory_interests():
+    """查询用户长期兴趣"""
+    interests = await get_active_interests()
+    return {"interests": interests}
 
 
 @app.get("/negotiate/stream")
