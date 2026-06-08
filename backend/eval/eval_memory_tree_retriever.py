@@ -4,7 +4,7 @@
     cd backend
     python eval/eval_memory_tree_retriever.py "Agent Memory 怎么设计"
 
-脚本会先确保 Source Tree 已构建，再执行 Tree Retrieval。
+脚本会先确保 Source Tree / Topic Tree 已构建，再执行 Tree Retrieval。
 """
 
 import sys
@@ -15,7 +15,7 @@ import asyncio
 
 from db.database import init_db
 import db.models
-from memory.tree_builder import build_source_tree
+from memory.tree_builder import build_source_tree, build_topic_tree
 from memory.tree_retriever import retrieve_from_memory_tree
 
 
@@ -25,16 +25,25 @@ async def main() -> None:
     parser.add_argument("--top-k", type=int, default=3)
     parser.add_argument("--max-chunks", type=int, default=5)
     parser.add_argument("--use-embedding", action="store_true")
+    parser.add_argument("--tree-type", choices=["source", "topic", "global"])
+    parser.add_argument("--with-llm-summary", action="store_true")
     args = parser.parse_args()
 
     await init_db()
-    await build_source_tree(with_embedding=args.use_embedding)
+    await build_source_tree(
+        with_embedding=args.use_embedding,
+        with_llm_summary=args.with_llm_summary,
+    )
+    await build_topic_tree(
+        with_embedding=args.use_embedding,
+        with_llm_summary=args.with_llm_summary,
+    )
 
     results = await retrieve_from_memory_tree(
         args.query,
         top_k=args.top_k,
         max_chunks=args.max_chunks,
-        tree_type="source",
+        tree_type=args.tree_type,
         use_embedding=args.use_embedding,
     )
 

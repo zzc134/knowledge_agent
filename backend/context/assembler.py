@@ -6,8 +6,36 @@ from memory.short_term import ShortTermMemory
 from config import get_settings
 
 
-
 settings = get_settings()
+
+
+async def _build_memory_tree_text(user_query: str) -> str:
+    """检索与当前 query 相关的 Memory Tree 摘要路径。"""
+    if not user_query.strip():
+        return "## Memory Tree 相关摘要\n暂无相关记忆\n"
+
+    try:
+        from memory.tree_retriever import retrieve_from_memory_tree
+
+        tree_results = await retrieve_from_memory_tree(
+            user_query,
+            top_k=2,
+            max_chunks=3,
+        )
+    except Exception:
+        tree_results = []
+
+    if not tree_results:
+        return "## Memory Tree 相关摘要\n暂无相关记忆\n"
+
+    lines = ["## Memory Tree 相关摘要"]
+    for result_index, result in enumerate(tree_results, start=1):
+        lines.append(f"### 命中 {result_index}: {result.matched_node.title}")
+        for node in result.memory_path:
+            lines.append(
+                f"- L{node.level} [{node.tree_type}] {node.title}: {node.summary[:300]}"
+            )
+    return "\n".join(lines) + "\n"
 
 
 async def assemble_context(
@@ -33,28 +61,36 @@ async def assemble_context(
     else:
         interest_text = "## 用户长期兴趣\n暂无记录\n"
 
-    # 第 2 层：当前会话摘要（中频更新）
+    # 第 2 层：Memory Tree 相关摘要（低频更新，但按 query 选择）
+    memory_tree_text = await _build_memory_tree_text(user_query)
+
+    # 第 3 层：当前会话摘要（中频更新）
     session_text = f"## 当前会话上下文\n{session.get_recent_context()}"
 
     # 组装 system prompt
-    full_system = f"{agent_system_prompt}\n\n{interest_text}\n{session_text}"
+    full_system = (
+        f"{agent_system_prompt}\n\n"
+        f"{interest_text}\n"
+        f"{memory_tree_text}\n"
+        f"{session_text}"
+    )
     messages = [{"role": "system", "content": full_system}]
 
-    # 第 3 层：工具定义（几乎不变）
+    # 第 4 层：工具定义（几乎不变）
     if tools_description:
         messages.append({
             "role": "system",
             "content": f"## 可用工具\n{tools_description}",
         })
 
-    # 第 4 层：检索结果（每次 query 不同）
+    # 第 5 层：检索结果（每次 query 不同）
     if retrieved_docs:
         docs_text = "## 检索结果\n"
         for i, doc in enumerate(retrieved_docs):
             docs_text += f"[{i}] {doc['content'][:300]}\n"
         messages.append({"role": "system", "content": docs_text})
 
-    # 第 5 层：当前 query（每次都变）
+    # 第 6 层：当前 query（每次都变）
     messages.append({"role": "user", "content": user_query})
 
     return messages

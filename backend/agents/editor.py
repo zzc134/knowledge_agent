@@ -31,6 +31,64 @@ class EditorAgent(BaseAgent):
             from retrieval.retriever import retrieve
 
             llm_call_func = llm_mod.llm_call
+
+            # 先走 Memory Tree：读取高层摘要路径，再下钻到 L0 chunks。
+            # 如果树还没构建、没有命中，或者检索器异常，再回退到原来的混合检索。
+            try:
+                from memory.tree_retriever import retrieve_from_memory_tree
+
+                tree_results = await retrieve_from_memory_tree(
+                    question,
+                    top_k=2,
+                    max_chunks=4,
+                )
+            except Exception:
+                tree_results = []
+
+            if tree_results:
+                memory_text_parts = []
+                source_index = 1
+                for result_index, result in enumerate(tree_results, start=1):
+                    path_text = "\n".join(
+                        f"- L{node.level} {node.title}: {node.summary[:500]}"
+                        for node in result.memory_path
+                    )
+                    chunk_lines = []
+                    for chunk in result.chunks:
+                        chunk_lines.append(
+                            f"[来源{source_index}] {chunk.content[:400]}"
+                        )
+                        source_index += 1
+
+                    memory_text_parts.append(
+                        f"## Memory Tree 命中 {result_index}\n"
+                        f"命中节点：{result.matched_node.title}\n\n"
+                        f"摘要路径：\n{path_text}\n\n"
+                        f"原始证据：\n" + "\n\n".join(chunk_lines)
+                    )
+
+                memory_text = "\n\n".join(memory_text_parts)
+                answer_prompt = f"""基于以下 Memory Tree 检索结果回答用户问题。
+
+请先利用“摘要路径”理解整体背景，再依据“原始证据”回答。
+必须标注信息来源编号，例如 [来源1]、[来源2]。
+如果信息不足，请明确说明缺口，不要编造。
+
+Memory Tree 检索结果：
+{memory_text}
+
+用户问题：{question}
+
+请回答："""
+
+                response = await llm_call_func(
+                    system_prompt="你是一个知识助手，优先基于 Memory Tree 的摘要路径和原始证据回答用户问题。必须标注来源编号。",
+                    user_message=answer_prompt,
+                    provider=self.provider,
+                    model=self.model,
+                )
+                return response
+
             results = await retrieve(question, llm_call_func, top_k=3)
 
             if not results:

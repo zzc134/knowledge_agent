@@ -49,15 +49,38 @@ class BaseAgent:
             parts.append("不需要调工具时，直接回复用户。")
         return "\n".join(parts)
 
+    async def _build_initial_messages(self, user_message: str) -> list[dict]:
+        """构建第一次 LLM 调用的上下文。
+
+        如果 Agent 绑定了 ShortTermMemory session，就使用 context assembler 注入：
+        长期兴趣、Memory Tree 摘要、当前会话上下文和工具定义。
+        没有 session 的 Agent 保持旧逻辑，避免影响 Collector/Curator/Librarian。
+        """
+        session = getattr(self, "session", None)
+        if session is None:
+            return [{"role": "system", "content": self._build_full_system_prompt()}]
+
+        try:
+            from context.assembler import assemble_context
+
+            return await assemble_context(
+                agent_system_prompt=self.system_prompt,
+                session=session,
+                tools_description=self.tools_description(),
+                user_query=user_message,
+            )
+        except Exception:
+            return [{"role": "system", "content": self._build_full_system_prompt()}]
+
     async def think_and_act(self, user_message: str) -> dict:
         """核心循环：多轮对话 + 工具调用，完整保留对话历史"""
 
         if not self.conversation_history:
-            self.conversation_history.append(
-                {"role": "system", "content": self._build_full_system_prompt()}
+            self.conversation_history.extend(
+                await self._build_initial_messages(user_message)
             )
-
-        self.conversation_history.append({"role": "user", "content": user_message})
+        else:
+            self.conversation_history.append({"role": "user", "content": user_message})
 
         tool_calls_made = []
         max_turns = 3

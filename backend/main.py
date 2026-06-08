@@ -7,6 +7,11 @@ from fastapi.responses import StreamingResponse
 from db.database import init_db
 from core.orchestrator import Orchestrator
 from memory.long_term import get_active_interests
+from memory.tree_api import (
+    get_memory_tree_node,
+    list_memory_tree_roots,
+    search_memory_tree,
+)
 
 orchestrator = Orchestrator()
 
@@ -81,6 +86,38 @@ async def memory_interests():
     return {"interests": interests}
 
 
+@app.get("/memory/tree")
+async def memory_tree(tree_type: str | None = None, level: int = 2, limit: int = 100):
+    """查询 Memory Tree 高层节点，默认返回 L2 roots"""
+    return await list_memory_tree_roots(
+        tree_type=tree_type,
+        level=level,
+        limit=limit,
+    )
+
+
+@app.get("/memory/tree/search")
+async def memory_tree_search(
+    q: str,
+    tree_type: str | None = None,
+    top_k: int = 5,
+    max_chunks: int = 5,
+):
+    """搜索 Memory Tree，并返回摘要路径和原始 chunks"""
+    return await search_memory_tree(
+        query=q,
+        tree_type=tree_type,
+        top_k=top_k,
+        max_chunks=max_chunks,
+    )
+
+
+@app.get("/memory/tree/{node_id}")
+async def memory_tree_node(node_id: str):
+    """查询一个 Memory Tree 节点的直接子节点和 chunks"""
+    return await get_memory_tree_node(node_id)
+
+
 @app.get("/negotiate/stream")
 async def negotiate_stream(request: Request):
     """SSE 实时流——监听 Agent 之间的通信"""
@@ -102,6 +139,6 @@ async def negotiate_stream(request: Request):
 
     return StreamingResponse(
         event_stream(),
-        media_type="text/event-stream",
+        media_type="text/event-stream",  #什么这是SSE协议
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
